@@ -1,0 +1,19 @@
+APPLE RETAIL STORE #R142
+ONE APPLE PARK WAY, CUPERTINO, CA
+INVOICE / RECEIPT: INV-2024-98421
+DATE: 2024-03-15
+CUSTOMER: ALEX CHEN
+
+ITEM: MacBook Pro 16-inch M3 Max (36GB RAM / 1TB SSD)
+BRAND: Apple
+MODEL: A2991 (MacBook Pro 16)
+SERIAL NO: C02XG123K9J2
+PURCHASE PRICE: $2,499.00 USD
+SALES TAX: $218.66
+TOTAL: $2,717.66
+
+WARRANTY INFORMATION:
+1-Year Limited Apple Hardware Warranty Included.
+Warranty Expiry Date: 2025-03-15
+AppleCare+ Eligible within 60 days.
+Authorized Apple Service Provider: Genius Bar Worldwide
