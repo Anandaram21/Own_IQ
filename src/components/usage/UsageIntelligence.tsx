@@ -133,20 +133,20 @@ export const UsageIntelligence: React.FC = () => {
         utilizationTier = 'Optimal Daily (80-100%)';
         benchmarkHours = 400;
         rec = 'Keep & Maintain';
-        reasoning = `High daily utilization (${totalHours} hrs) amortizes ownership cost down to $${costPerHour}/hr. Value delivered ($${valueDelivered}) greatly exceeds purchase price.`;
+        reasoning = `High daily utilization (${totalHours} hrs) amortizes ownership cost down to ₹${costPerHour}/hr. Value delivered (₹${valueDelivered.toLocaleString('en-IN')}) greatly exceeds purchase price.`;
       } else if (frequency === 'Weekly') {
         utilizationRate = 68;
         utilizationTier = 'Consistent Weekly (50-79%)';
         benchmarkHours = 120;
         rec = 'Keep & Maintain';
-        reasoning = `Consistent weekly deployment in ${asset.location}. Efficient asset life balance with stable residual market valuation ($${Math.round(currentVal)}).`;
+        reasoning = `Consistent weekly deployment in ${asset.location}. Efficient asset life balance with stable residual market valuation (₹${Math.round(currentVal).toLocaleString('en-IN')}).`;
       } else if (frequency === 'Occasional') {
         utilizationRate = 34;
         utilizationTier = 'Occasional (25-49%)';
         benchmarkHours = 60;
         if (depreciationPct > 35 && asset.condition === 'Good') {
           rec = 'Consider Resale';
-          reasoning = `Occasional usage pattern (${totalHours} hrs) with high residual resale market demand ($${Math.round(currentVal)}). Selling now prevents further steep depreciation.`;
+          reasoning = `Occasional usage pattern (${totalHours} hrs) with high residual resale market demand (₹${Math.round(currentVal).toLocaleString('en-IN')}). Selling now prevents further steep depreciation.`;
         } else {
           rec = 'Keep & Maintain';
           reasoning = `Specialized asset reserved for seasonal travel and events. Preserves household utility.`;
@@ -448,12 +448,12 @@ export const UsageIntelligence: React.FC = () => {
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Avg. Cost / Hour</span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-              <DollarSign className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
+              ₹
             </div>
           </div>
           <div className="text-2xl font-extrabold text-slate-900 dark:text-white">
-            ${avgCostPerHour}<span className="text-xs font-normal text-slate-400">/hr</span>
+            ₹{avgCostPerHour}<span className="text-xs font-normal text-slate-400">/hr</span>
           </div>
           <div className="text-xs text-slate-500">
             Portfolio ownership rate per hour
@@ -730,7 +730,7 @@ export const UsageIntelligence: React.FC = () => {
               Financial Efficiency: Original Cost vs. Current Value vs. Delivered Utility
             </h3>
             <p className="text-xs text-slate-400">
-              Evaluates whether asset usage has amortized the initial investment ($25/hr productivity benchmark)
+              Evaluates whether asset usage has amortized the initial investment (₹2,000/hr productivity benchmark)
             </p>
           </div>
         </div>
@@ -740,7 +740,7 @@ export const UsageIntelligence: React.FC = () => {
             <BarChart data={financialRoiData} margin={{ top: 15, right: 10, left: 10, bottom: 20 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.5} />
               <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} />
-              <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} unit="$" />
+              <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} unit="₹" />
               <Tooltip 
                 contentStyle={{ 
                   backgroundColor: '#0f172a', 
@@ -749,7 +749,7 @@ export const UsageIntelligence: React.FC = () => {
                   color: '#fff',
                   fontSize: '12px' 
                 }} 
-                formatter={(val: any) => [`$${val.toLocaleString()}`, 'Amount']}
+                formatter={(val: any) => [`₹${val.toLocaleString('en-IN')}`, 'Amount']}
               />
               <Bar dataKey="purchasePrice" name="Original Price" fill="#64748b" radius={[4, 4, 0, 0]} />
               <Bar dataKey="currentValue" name="Current Resale Value" fill="#0ea5e9" radius={[4, 4, 0, 0]} />
@@ -769,7 +769,7 @@ export const UsageIntelligence: React.FC = () => {
           </div>
           <div className="flex items-center gap-1.5 font-medium">
             <span className="w-3 h-3 rounded-md bg-emerald-500"></span>
-            <span>Delivered Utility Value ($25/hr)</span>
+            <span>Delivered Utility Value (₹2,000/hr)</span>
           </div>
         </div>
       </div>
@@ -844,15 +844,15 @@ export const UsageIntelligence: React.FC = () => {
                 <div className="grid grid-cols-3 gap-2 text-xs pt-2 border-t border-slate-200/60 dark:border-slate-700/60">
                   <div>
                     <span className="text-slate-400 block text-[10px]">Cost / Hour</span>
-                    <span className="font-bold text-slate-800 dark:text-slate-200">${item.costPerHour}</span>
+                    <span className="font-bold text-slate-800 dark:text-slate-200">₹{item.costPerHour}</span>
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[10px]">Resale Potential</span>
-                    <span className="font-bold text-slate-800 dark:text-slate-200">${item.estimatedResaleValue}</span>
+                    <span className="font-bold text-slate-800 dark:text-slate-200">₹{item.estimatedResaleValue.toLocaleString('en-IN')}</span>
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[10px]">Delivered Value</span>
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400">${item.valueDelivered}</span>
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400">₹{item.valueDelivered.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
               </div>

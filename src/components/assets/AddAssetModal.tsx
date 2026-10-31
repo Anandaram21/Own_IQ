@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 export const AddAssetModal: React.FC = () => {
-  const { isAddAssetModalOpen, setIsAddAssetModalOpen, addAsset } = useApp();
+  const { isAddAssetModalOpen, setIsAddAssetModalOpen, addAsset, userProfile } = useApp();
 
   const [mode, setMode] = useState<'upload' | 'manual'>('upload');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -48,7 +48,7 @@ export const AddAssetModal: React.FC = () => {
   const [category, setCategory] = useState<AssetCategory>('Laptops & Computing');
   const [purchaseDate, setPurchaseDate] = useState(new Date().toISOString().split('T')[0]);
   const [purchasePrice, setPurchasePrice] = useState<number>(0);
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState(userProfile.currency || 'INR');
   const [condition, setCondition] = useState<AssetCondition>('Mint / Like New');
   const [location, setLocation] = useState('Home Office');
   const [warrantyProvider, setWarrantyProvider] = useState('');
@@ -768,10 +768,10 @@ export const AddAssetModal: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Purchase Price
+                  Purchase Price (INR ₹)
                 </label>
                 <div className="relative">
-                  <DollarSign className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <span className="font-bold text-xs text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2">₹</span>
                   <input
                     type="number"
                     step="0.01"

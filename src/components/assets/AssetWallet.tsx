@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
+import { formatCurrency } from '../../services/currencyService';
 import { Asset, AssetCategory } from '../../types';
 import { 
   ShieldCheck, 
@@ -28,7 +29,8 @@ export const AssetWallet: React.FC = () => {
     setIsAddAssetModalOpen, 
     setIsQrScannerModalOpen,
     searchQuery, 
-    setSearchQuery 
+    setSearchQuery,
+    userProfile 
   } = useApp();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -187,7 +189,9 @@ export const AssetWallet: React.FC = () => {
           </div>
           <div>
             <div className="text-xs text-slate-400">Total Portfolio Value</div>
-            <div className="text-2xl font-extrabold text-brand-400 mt-0.5">${totalValue.toLocaleString()}</div>
+            <div className="text-2xl font-extrabold text-brand-400 mt-0.5">
+              {formatCurrency(totalValue, 'INR', userProfile.currency || 'INR')}
+            </div>
           </div>
           <div>
             <div className="text-xs text-slate-400">Secured Documents</div>
@@ -372,7 +376,7 @@ export const AssetWallet: React.FC = () => {
                 <div>
                   <div className="text-[10px] text-slate-400">Current Value</div>
                   <div className="font-bold text-slate-900 dark:text-white">
-                    ${(asset.currentEstimatedValue || asset.purchasePrice || 0).toLocaleString()}
+                    {formatCurrency(asset.currentEstimatedValue || asset.purchasePrice || 0, asset.currency || 'INR', userProfile.currency || 'INR')}
                   </div>
                 </div>
 
@@ -420,7 +424,7 @@ export const AssetWallet: React.FC = () => {
               <div className="flex items-center gap-6">
                 <div className="text-right hidden sm:block">
                   <div className="text-xs font-bold text-slate-900 dark:text-white">
-                    ${(asset.currentEstimatedValue || asset.purchasePrice).toLocaleString()}
+                    {formatCurrency(asset.currentEstimatedValue || asset.purchasePrice, asset.currency || 'INR', userProfile.currency || 'INR')}
                   </div>
                   <div className="text-[10px] text-slate-400">{asset.documents?.length || 0} documents</div>
                 </div>

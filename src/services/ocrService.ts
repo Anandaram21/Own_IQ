@@ -23,7 +23,7 @@ ITEM: MacBook Pro 16-inch M3 Max
 BRAND: Apple
 MODEL: A2991
 SERIAL NO: C02XG123K9J2
-PURCHASE PRICE: $2499.00 USD
+PURCHASE PRICE: ₹249900.00 INR
 1-Year Limited Apple Hardware Warranty Included.
 Warranty Expiry Date: 2025-03-15`,
   },
@@ -40,7 +40,7 @@ PRODUCT: SONY WH-1000XM5 WIRELESS HEADPHONES
 BRAND: Sony
 MODEL: WH1000XM5/S
 SERIAL NUMBER: S01-9876543-H
-PRICE: $399.99 USD
+PRICE: ₹29990.00 INR
 WARRANTY: 24 MONTHS SONY MANUFACTURER WARRANTY
 WARRANTY EXPIRY: 2026-05-20`,
   },
@@ -56,7 +56,7 @@ PRODUCT NAME: Dyson V15 Detect Cordless Vacuum Cleaner
 BRAND: Dyson
 MODEL NUMBER: SV22
 SERIAL NUMBER: DY-V15-894726-X
-PURCHASE PRICE: $749.99 USD
+PURCHASE PRICE: ₹62990.00 INR
 GUARANTEE DURATION: 2 Years (24 Months)
 EXPIRY DATE: 2025-11-10`,
   },
@@ -244,10 +244,11 @@ export function parseExtractedText(text: string): OcrExtractedData {
   }
 
   // 8. Purchase Price & Currency
-  let currency = "USD";
-  if (/₹|INR|\bRs\.?\b/i.test(cleaned)) currency = "INR";
+  let currency = "INR";
+  if (/\$|USD/i.test(cleaned)) currency = "USD";
   else if (/€|\bEUR\b/i.test(cleaned)) currency = "EUR";
   else if (/£|\bGBP\b/i.test(cleaned)) currency = "GBP";
+  else if (/₹|INR|\bRs\.?\b/i.test(cleaned)) currency = "INR";
 
   let purchasePrice = 0;
   const pricePatterns = [

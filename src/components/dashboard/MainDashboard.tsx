@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
+import { formatCurrency } from '../../services/currencyService';
 import { 
   ShieldCheck, 
   Compass, 
@@ -40,7 +41,8 @@ export const MainDashboard: React.FC = () => {
     markNotificationRead,
     setSelectedAsset,
     setIsAddAssetModalOpen,
-    setIsQrScannerModalOpen 
+    setIsQrScannerModalOpen,
+    userProfile 
   } = useApp();
 
   const totalPortfolioValue = assets.reduce((sum, a) => sum + (a.currentEstimatedValue || a.purchasePrice || 0), 0);
@@ -102,7 +104,9 @@ export const MainDashboard: React.FC = () => {
           </div>
           <div>
             <div className="text-xs text-slate-400">Total Portfolio Valuation</div>
-            <div className="text-2xl font-extrabold text-brand-400 mt-0.5">${totalPortfolioValue.toLocaleString()}</div>
+            <div className="text-2xl font-extrabold text-brand-400 mt-0.5">
+              {formatCurrency(totalPortfolioValue, 'INR', userProfile.currency || 'INR')}
+            </div>
           </div>
           <div>
             <div className="text-xs text-slate-400">Today's Weather Readiness</div>
@@ -318,7 +322,7 @@ export const MainDashboard: React.FC = () => {
                 <span className="font-bold text-amber-600">Samsonite Luggage</span>
               </div>
               <p className="text-[11px] text-slate-400 pt-1 border-t border-slate-200 dark:border-slate-700">
-                AI Recommendation: Samsonite Luggage maintains $160 residual value. Retained for Nov travel.
+                AI Recommendation: Samsonite Luggage maintains ₹13,500 residual value. Retained for Nov travel.
               </p>
             </div>
           </div>
@@ -416,7 +420,9 @@ export const MainDashboard: React.FC = () => {
               <div>
                 <div className="text-[10px] font-bold text-brand-600 uppercase">{asset.brand}</div>
                 <div className="font-bold text-xs text-slate-900 dark:text-white truncate">{asset.name}</div>
-                <div className="text-[11px] text-slate-400 mt-1">${(asset.currentEstimatedValue || asset.purchasePrice).toLocaleString()}</div>
+                <div className="text-[11px] text-slate-400 mt-1">
+                  {formatCurrency(asset.currentEstimatedValue || asset.purchasePrice, asset.currency || 'INR', userProfile.currency || 'INR')}
+                </div>
               </div>
             </div>
           ))}

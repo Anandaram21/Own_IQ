@@ -135,7 +135,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Core state from storage with fallbacks
   const [assets, setAssets] = useState<Asset[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEYS.ASSETS);
-    return saved ? JSON.parse(saved) : INITIAL_ASSETS;
+    if (saved) {
+      try {
+        const parsed: Asset[] = JSON.parse(saved);
+        return parsed.map(a => {
+          if (a.currency === 'USD') {
+            const priceInInr = a.purchasePrice < 100000 ? Math.round(a.purchasePrice * 83.25) : a.purchasePrice;
+            const estInInr = (a.currentEstimatedValue || 0) < 100000 ? Math.round((a.currentEstimatedValue || 0) * 83.25) : a.currentEstimatedValue;
+            return {
+              ...a,
+              currency: 'INR',
+              purchasePrice: priceInInr,
+              currentEstimatedValue: estInInr
+            };
+          }
+          return { ...a, currency: a.currency || 'INR' };
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return INITIAL_ASSETS;
   });
 
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>(() => {
@@ -183,10 +203,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
+        let updated = { ...parsed };
         if (!parsed.city || parsed.city === 'San Francisco' || parsed.city === 'Bengaluru') {
-          return { ...parsed, city: 'Vellore, Tamil Nadu', country: 'India' };
+          updated.city = 'Vellore, Tamil Nadu';
+          updated.country = 'India';
         }
-        return parsed;
+        if (!parsed.currency || parsed.currency === 'USD') {
+          updated.currency = 'INR';
+        }
+        return updated;
       } catch (e) {
         console.error(e);
       }

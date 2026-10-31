@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { useAuth } from '../../context/AuthContext';
+import { formatCurrency } from '../../services/currencyService';
 import { 
   AppModule, 
   CareViewMode,
@@ -271,7 +272,7 @@ export const Header: React.FC = () => {
                             </div>
                             <div className="text-right shrink-0">
                               <div className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200">
-                                {asset.currency === 'INR' ? '₹' : '$'}{asset.purchasePrice.toLocaleString()}
+                                {formatCurrency(asset.purchasePrice, asset.currency || 'INR', userProfile.currency || 'INR')}
                               </div>
                               <span className="text-[10px] text-slate-400">{asset.category}</span>
                             </div>

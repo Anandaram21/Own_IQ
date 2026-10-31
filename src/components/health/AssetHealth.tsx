@@ -356,7 +356,7 @@ export const AssetHealth: React.FC = () => {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                    Cost in USD
+                    Cost in INR (₹)
                   </label>
                   <input
                     type="number"

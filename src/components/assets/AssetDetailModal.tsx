@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
+import { formatCurrency } from '../../services/currencyService';
 import { Asset, AssetDocument } from '../../types';
 import { 
   X, 
@@ -28,7 +29,8 @@ export const AssetDetailModal: React.FC = () => {
     deleteAsset, 
     addDocumentToAsset, 
     addMaintenanceRecord, 
-    logAssetUsage 
+    logAssetUsage,
+    userProfile 
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<'overview' | 'documents' | 'qr' | 'maintenance' | 'usage'>('overview');
@@ -216,7 +218,7 @@ export const AssetDetailModal: React.FC = () => {
                 <div className="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800">
                   <div className="text-[11px] text-slate-400 font-medium">Purchase Price</div>
                   <div className="text-base font-bold text-slate-900 dark:text-white mt-0.5">
-                    ${selectedAsset.purchasePrice.toLocaleString()}
+                    {formatCurrency(selectedAsset.purchasePrice, selectedAsset.currency || 'INR', userProfile.currency || 'INR')}
                   </div>
                   <div className="text-[10px] text-slate-400">{selectedAsset.purchaseDate}</div>
                 </div>
@@ -224,7 +226,7 @@ export const AssetDetailModal: React.FC = () => {
                 <div className="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800">
                   <div className="text-[11px] text-slate-400 font-medium">Estimated Value</div>
                   <div className="text-base font-bold text-brand-600 dark:text-brand-400 mt-0.5">
-                    ${selectedAsset.currentEstimatedValue.toLocaleString()}
+                    {formatCurrency(selectedAsset.currentEstimatedValue, selectedAsset.currency || 'INR', userProfile.currency || 'INR')}
                   </div>
                   <div className="text-[10px] text-slate-400">AI Market Valuation</div>
                 </div>
@@ -432,7 +434,7 @@ export const AssetDetailModal: React.FC = () => {
                     />
                     <input
                       type="number"
-                      placeholder="Cost in USD (0 for complimentary)"
+                      placeholder="Cost in INR (0 for complimentary)"
                       value={maintCost || ''}
                       onChange={(e) => setMaintCost(parseFloat(e.target.value) || 0)}
                       className="px-3 py-2 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl"
@@ -489,7 +491,7 @@ export const AssetDetailModal: React.FC = () => {
                         <div className="text-[11px] text-slate-400">By {rec.provider} on {rec.date}</div>
                       </div>
                       <div className="text-xs font-bold text-slate-900 dark:text-white">
-                        {rec.cost === 0 ? 'Complimentary' : `$${rec.cost}`}
+                        {rec.cost === 0 ? 'Complimentary' : formatCurrency(rec.cost, 'INR', userProfile.currency || 'INR')}
                       </div>
                     </div>
                   ))}

@@ -120,6 +120,77 @@ export const SettingsView: React.FC = () => {
         </div>
       </div>
 
+      {/* SECTION: REGIONAL & CURRENCY PREFERENCES */}
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+        <div>
+          <h2 className="text-base font-bold text-slate-900 dark:text-white">Regional & Currency Preferences</h2>
+          <p className="text-xs text-slate-400">Controls default currency formatting, unit systems, and locale settings across the platform</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              Platform Currency
+            </label>
+            <select
+              value={userProfile.currency || 'INR'}
+              onChange={(e) => updateUserProfile({ currency: e.target.value })}
+              className="w-full px-3 py-2 text-xs font-semibold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none"
+            >
+              <option value="INR">🇮🇳 INR (₹) — Indian Rupee (Default)</option>
+              <option value="USD">🇺🇸 USD ($) — US Dollar</option>
+              <option value="EUR">🇪🇺 EUR (€) — Euro</option>
+              <option value="GBP">🇬🇧 GBP (£) — British Pound</option>
+              <option value="AED">🇦🇪 AED (د.إ) — UAE Dirham</option>
+              <option value="CAD">🇨🇦 CAD (CA$) — Canadian Dollar</option>
+              <option value="AUD">🇦🇺 AUD (A$) — Australian Dollar</option>
+              <option value="SGD">🇸🇬 SGD (S$) — Singapore Dollar</option>
+              <option value="JPY">🇯🇵 JPY (¥) — Japanese Yen</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              Weather Location Node
+            </label>
+            <input
+              type="text"
+              value={userProfile.city || 'Vellore, Tamil Nadu'}
+              onChange={(e) => updateUserProfile({ city: e.target.value })}
+              className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              Timezone & Clock
+            </label>
+            <select
+              value={userProfile.timeZone || 'Asia/Kolkata'}
+              onChange={(e) => updateUserProfile({ timeZone: e.target.value })}
+              className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none"
+            >
+              <option value="Asia/Kolkata">Asia/Kolkata (IST, UTC+05:30)</option>
+              <option value="UTC">Coordinated Universal Time (UTC)</option>
+              <option value="Asia/Dubai">Asia/Dubai (GST, UTC+04:00)</option>
+              <option value="Asia/Singapore">Asia/Singapore (SGT, UTC+08:00)</option>
+              <option value="Europe/London">Europe/London (GMT/BST, UTC+00:00)</option>
+              <option value="America/New_York">America/New_York (EST/EDT, UTC-05:00)</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="p-3 bg-brand-50 dark:bg-brand-950/30 border border-brand-200 dark:border-brand-900 rounded-xl text-xs text-brand-800 dark:text-brand-300 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-sm">₹</span>
+            <span>Default currency is set to <strong>Indian Rupee (INR)</strong> with Indian numbering system grouping (e.g. ₹2,49,900).</span>
+          </div>
+          <span className="text-[10px] font-bold px-2 py-0.5 bg-brand-200 dark:bg-brand-800 text-brand-900 dark:text-brand-100 rounded-full">
+            Active
+          </span>
+        </div>
+      </div>
+
       {/* SECTION 1: MODULAR INTEGRATIONS STATUS */}
       <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-6">
         <div>
